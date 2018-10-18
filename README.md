@@ -57,3 +57,11 @@
 	5、外键约束---处理多表间的关系
 	6、多表查询---笛卡尔积、外连接、子查询
 	7、附录
+	
+11、JDBC相关
+	1、jdbc操作步骤及jdbc-api详解
+	2、配置文件及ResourceBundle工具类快速获取配置信息
+	3、连接池及装饰者模式
+	4、DBCP与C3P0
+	5、使用dbutils完成curd操作
+	6、QueryRunner、DbUtils、ResultSetHandler
