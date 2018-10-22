@@ -65,3 +65,10 @@
 	4、DBCP与C3P0
 	5、使用dbutils完成curd操作
 	6、QueryRunner、DbUtils、ResultSetHandler
+	
+12、xml与tomcat相关
+	1、xml(包括书写规范等)及其组成部分(声明、元素、属性、注释、CDATA)
+	2、xml解析
+	3、xml(DTD约束、SCHEMA约束)
+	4、tomcat与其目录结构
+	5、web项目的目录结构及其项目发布方式
