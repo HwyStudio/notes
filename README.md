@@ -72,3 +72,16 @@
 	3、xml(DTD约束、SCHEMA约束)
 	4、tomcat与其目录结构
 	5、web项目的目录结构及其项目发布方式
+	
+13、servlet相关
+	1、request方式（请求行 请求头 请求体）、response方式（响应行 响应头 响应体）
+	2、servlet概述、体系结构
+	3、servlet常用方法、GenericServlet常用方法
+	4、servlet生命周期 （init、service、destroy）
+	5、ServletContext（全局管理者）
+	6、域对象
+	
+	
+	
+	
+	
