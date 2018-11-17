@@ -80,8 +80,14 @@
 	4、servlet生命周期 （init、service、destroy）
 	5、ServletContext（全局管理者）
 	6、域对象
+
+14、Linux基本内容
+	1、根目录下的各目录的基本意义
 	
-	
-	
-	
+15、request和response
+	1、response(操作响应行、操作响应头(setHeader、addHeader)、操作响应体(response.setContentType("text/html;charset=utf-8")))
+	2、文件下载方式
+	3、request(操作请求行、操作请求头(getHeader(String key))、操作请求参数(getParameterMap()))
+	4、请求的中文乱码,对于post(request.setCharacterEncoding("utf-8")),域对象(request)
+	5、请求转发和重定向区别
 	
