@@ -90,9 +90,12 @@
 	3、request(操作请求行、操作请求头(getHeader(String key))、操作请求参数(getParameterMap()))
 	4、请求的中文乱码,对于post(request.setCharacterEncoding("utf-8")),域对象(request)
 	5、请求转发和重定向区别
+<<<<<<< HEAD
 	
 16、cookie与session
 	1、JSP（概念、执行流程、JSP脚本）
 	2、cookie：浏览器端会话技术
 	3、session：服务器端会话技术
+=======
+>>>>>>> 05e17f00d6ffadb1c1cb0e65d27079a540cc7e67
 	

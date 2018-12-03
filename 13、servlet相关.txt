@@ -1,0 +1,227 @@
+http：超文本传输协议：规定数据的格式
+	浏览器往服务器发送 ---- 请求
+	服务器往浏览器回写 ---- 响应
+	
+请求:(request)
+	组成部分：请求行 请求头 请求体
+		
+	请求行：请求信息的第一行
+		格式:请求方式	访问的资源	协议/版本
+		例如:GET /day0801/1.html HTTP/1.1
+		请求方式:get和post
+			get会把参数放在url的后面 post不会
+			get参数大小有限制,post请求却没有限制
+			get请求没有请求体;post请求有请求体 请求参数放在请求体中
+	请求头:请求信息的第二行到空行结束
+		格式：key:value (value可以是多个值)
+		常见的请求头:
+			Accept: text/html,image/bmp		--支持数据类型    text/html text/css text/javascript 大类型/小类型 这些叫mime类型
+			Accept-Charset: ISO-8859-1	--字符集
+			Accept-Encoding: gzip		--支持压缩
+			Accept-Language:zh-cn 		--语言环境
+			Host: www.itcast.cn:80		--访问主机
+			If-Modified-Since: Tue, 11 Jul 2000 18:23:51 GMT	  --缓存文件的最后修改时间
+			Referer: http://www.itcast.com/index.jsp	 --来自哪个页面、防盗链
+			User-Agent: Mozilla/4.0 (compatible; MSIE 5.5; Windows NT 5.0)
+			Cookie
+			Connection:Keep-Alive   	--链接状态
+			
+		掌握的头信息:
+			Referer User-Agent Cookie If-Modified-Since
+	请求体:空行以下的内容
+		只有post才有请求体  get请求参数 http://xxxx?username=tom&password=123
+		格式:username=tom&password=123
+	
+响应:(response)
+	组成部分：响应行 响应头 响应体
+	响应行:响应信息的第一行
+		格式:协议/版本 状态码 状态码说明
+		例如:HTTP/1.1 200 OK
+		状态码:
+			200 正常响应成功
+			302 重定向
+			304 读缓存
+			404 用户操作资源不存在
+			500 服务器内部异常
+	响应头:从响应信息的第二行到空行结束
+		格式：key:value(value可以是多个值)
+		常见的头
+			Location: http://www.it315.org/index.jsp 	--跳转方向 和302一起使用的
+			Server:apache tomcat			--服务器型号
+			Content-Encoding: gzip 			--数据压缩
+			Content-Length: 80 			--数据长度
+			Content-Language: zh-cn 		--语言环境
+			Content-Type: text/html; charset=GB2312 		--数据类型
+			Last-Modified: Tue, 11 Jul 2000 18:23:51 GMT	--最后修改时间
+			Refresh: 1;url=http://www.it315.org		--定时刷新
+			Content-Disposition: attachment; filename=aaa.zip	--下载
+			Set-Cookie:SS=Q0=5Lb_nQ; path=/search
+			Expires: -1					--缓存
+			Cache-Control: no-cache  			--缓存
+			Pragma: no-cache   				--缓存
+			Connection: Keep-Alive   			--连接
+		掌握的头信息
+			Content-Type Location  Last-Modified Refresh Content-Disposition Set-Cookie
+	响应体:空行以下的内容
+		页面上展示的内容
+		
+servlet：动态的web开发技术,本质就是一个类,运行在服务器端的一个java小程序。
+	作用：处理业务逻辑,生成动态web内容
+	编写一个servlet步骤:
+		1.编写一个类
+			a.继承HttpServlet
+			b.重写doGet或者doPost方法
+		2.编写配置文件(web-inf/web.xml)
+			a.注册servlet
+			b.绑定路径
+		3.访问
+			http://主机:端口号/项目名/路径
+	接受参数:  格式:key=value
+		Sting value=request.getParameter("key")
+		例如: http://localhost/day09/hello?username=tom
+			request.getParameter("username")就可以获取tom值
+	回写内容:
+		response
+		response.getWriter().print("success");
+		处理响应数据中文乱码:
+			resp.setContentType("text/html;charset=utf-8"); //建议大家放在方法中的第一行
+			
+步骤分析:
+	1.先有数据库和表
+		create database day09;
+		use day09;
+		create table user(
+			id int primary key auto_increment,
+			username varchar(20),
+			password varchar(20),
+			email varchar(20),
+			name varchar(20),
+			sex varchar(10),
+			birthday date,
+			hobby varchar(50)
+		);
+		insert into user values (null,'tom','123','tom@126.com','tom','1','1988-01-01',null);
+	2.创建工程
+	3.复制页面
+		修改login.html
+			给用户名和密码添加name属性
+			修改表单的action属性
+				action="http://localhost/day0901/login"
+			添加method属性
+				method="post"
+	4.导入jar包:
+		驱动 dbutils c3p0
+	5.导入工具类和配置文件
+		datasourceUtils
+		c3p0-config.xml(注意修改数据名称)
+	6.创建servlet(LoginServlet: 路径 / login)
+		接受用户名和密码
+		调用service层(UserService)完成登录操作
+		提示信息
+	7.UserService
+		login(username,password)
+			调用dao
+	8.dao
+		通过用户名和密码查询数据库
+		
+serlvet总结:
+servlet的体系结构:(了解)
+	Servlet:接口
+		|
+	GenericServlet:抽象类
+		|
+	HttpServlet:抽象类
+		|
+	自定义servlet
+	
+	servlet常用方法:
+		void init(ServletConfig config):初始化
+		void service(ServletRequest request,ServletResponse response):服务 处理业务逻辑
+		void destroy():销毁
+		
+		ServletConfig getServletConfig() :获取当前servlet的配置对象
+	
+	GenericServlet常用方法:	
+		除了service方法没有实现,其他都实现了
+		空参的Init() 若我们自己想对servlet进行初始化操作,重写这个init()方法即可
+	
+	HttpServlet常用方法：
+		service做了实现，把参数强转，调用了重载的service方法
+			重载的service方法获取请求的方式,根据请求方式的不同调用相应doXxx()方法
+		doGet和doPost方法
+		
+servlet生命周期 ★★★
+	void init(ServletConfig config):初始化
+	 * 初始化方法
+	 * 执行者:服务器
+	 * 执行次数:一次
+	 * 执行时机:默认第一次访问的时候
+	void service(ServletRequest request,ServletResponse response):服务 处理业务逻辑
+	 * 服务
+	 * 执行者:服务器
+	 * 执行次数:请求一次执行一次
+	 * 执行时机:请求来的时候
+	void destroy():销毁
+	 * 销毁
+	 * 执行者:服务器
+	 * 执行次数:只执行一次
+	 * 执行时机:当servlet被移除的时候或者服务器正常关闭的时候
+	 
+	 serlvet是单实例多线程
+	 默认第一次访问的时候,服务器创建servlet,并调用init实现初始化操作.并调用一次service方法
+	 每当请求来的时候,服务器创建一个线程,调用service方法执行自己的业务逻辑
+	 当serlvet被移除的时候服务器正常关闭的时候,服务器调用servlet的destroy方法实现销毁操作.
+	 
+url-pattern的配置:★
+	方式1:完全匹配  必须以"/"开始 例如: /hello /a/b/c
+	方式2:目录匹配  必须"/"开始  以"*"结束	例如: /a/*
+	方式3:后缀名匹配 以"*"开始 以字符结尾 例如: *.jsp  *.do  *.action
+	
+	优先级:
+		完全匹配>目录匹配>后缀名匹配
+
+在servlet标签有一个子标签 load-on-startup
+	作用:用来修改servlet的初始化时机
+	取值:正整数  值越大优先级越低
+	
+当我们的配置文件里面没有指定配置的话,会查找tomcat的web.xml,
+	若请求我们自己的项目处理不了,tomcat的默认的servlet会帮我们处理信息
+	
+案例2-当我们登录失败,提示"用户名密码不匹配",3秒以后跳转到登录页面
+技术分析:
+	定时刷新
+常见的响应头-refresh
+	响应头格式:
+		refresh:秒数;url=跳转的路径
+	设置响应头:
+		response.setHeader(String key,String value);设置字符串形式的响应头
+		response.addHeader(String key,String value);追加响应头, 若之前设置设置过这个头,则追加;若没有设置过,则设置
+	设置定时刷新:
+		response.setHeader("refresh","3;url=/day0901/login.htm");
+步骤分析:
+	登录失败之后,修改业务逻辑
+		打印之后添加一个头信息即可
+		
+ServletContext:
+	上下文(全局管理者)
+	常用的方法:
+		setAttribute(String key,Object value);//设置值
+		Object getAttribute(String key);//获取值
+		removeAttribute(String key)://移除值
+获取全局管理者:
+	getServletContext():
+	
+域对象:★★★
+	servletcontext
+	当成map集合
+		常用方法:
+			xxxAttribute()
+	servletcontext创建和销毁:
+		当项目启动的时候,服务器为每一个web项目创建一个servletcontext对象.
+		当项目被移除的时候或者服务器关闭的时候servletcontext销毁
+	存放:
+		共享的数据
+		
+获取文件的路径:
+	通过类加载器获取文件:2.txt 放在classes目录下无论是java项目还是web项目都可以
+		类.class.getClassLoader().getResource("2.txt").getPath()
